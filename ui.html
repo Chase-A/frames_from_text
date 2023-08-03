@@ -1,0 +1,99 @@
+<head>
+  <!-- <link rel="stylesheet" href="https://static.figma.com/api/figma-extension-api-0.0.1.css"> -->
+  <style>
+    body {
+      font-family: "Roboto", sans-serif;
+      font-size: 14px;
+      background-color: #eee;
+      display: flex;
+      flex-direction: column;
+      gap: .75em;
+    }
+
+    h2 {
+      color: #000;
+      margin: 0;
+      padding: 0;
+      font-size: 1.5em;
+      line-height: 1.2em;
+      font-weight: 700;
+    }
+
+    textarea {
+      border-radius: 0.375em;
+      border: 1px solid #000;
+      background-color: #FFF;
+      padding: 5px;
+      font-size: 1em;
+    }
+
+    textarea:focus {
+      border-color: none;
+      outline: none !important;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: left;
+      align-items: flex-start;
+      gap: 0.5em;
+
+    }
+
+    button {
+      color: #000;
+      border-radius: 0.375em;
+      border: 1px solid #000;
+      background: #FFF;
+      font-weight: 700;
+      font-size: 1em;
+      padding: .3rem .9em;
+      width: fit-content;
+    }
+
+    button:hover {
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+
+
+<h2>Frame Generator</h2>
+<textarea id="dimensionsString" name="Dimensions String" rows="6" cols="32"></textarea>
+<div class="button-container">
+  <button id="generate">Generate</button>
+  <button id="cancel">Cancel</button>
+</div>
+<br>
+<br>
+<br>
+<p>example text ex .908W x 720H1640W x 1156H630W x 366H916W x 532H732W x 426H1102W x 640H630W x 366H916W x 532H732W x
+  426H1102W x 640H2880W x 360H1460W x 360H524W x 664H452W x 664H408W x 664H1152W x 460H
+</p>
+
+
+
+<script>
+
+  window.focus()
+  document.getElementById("dimensionsString").focus()
+
+  document.getElementById('generate').onclick = () => {
+    const text = document.getElementById('dimensionsString').value;
+    parent.postMessage({ pluginMessage: { type: 'generate-dimensions', text } }, '*')
+  }
+
+  document.getElementById('dimensionsString').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      console.log('enter pressed')
+      const text = document.getElementById('dimensionsString').value;
+      parent.postMessage({ pluginMessage: { type: 'generate-dimensions', text } }, '*')
+    }
+  });
+
+  document.getElementById('cancel').onclick = () => {
+    parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
+  }
+
+</script>
